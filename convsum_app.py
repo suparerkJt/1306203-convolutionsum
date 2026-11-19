@@ -4,7 +4,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 st.set_page_config(
-    page_title="Convolution Sum",
+    page_title="1306203/Convolution Sum",
     layout="wide",
 )
 
@@ -79,7 +79,6 @@ html = r"""
 #ROOT_ID .play  {background:linear-gradient(135deg,#27b57a,#168553);}
 #ROOT_ID .pause {background:linear-gradient(135deg,#f0b429,#cf8a00);}
 #ROOT_ID .reset {background:linear-gradient(135deg,#6b7488,#454c5e);}
-#ROOT_ID .step  {background:linear-gradient(135deg,#3b82f6,#1a56c4);}
 #ROOT_ID .theme {
     background:linear-gradient(135deg,#8b6cff,#5a3fd4);
     position:absolute;
@@ -296,8 +295,8 @@ html = r"""
 
 <button class="theme" id="theme">🌙 DARK MODE</button>
 
-<h2>Convolution Sum of Discrete-Time Signals</h2>
-<div class="subtitle">y[n] = Σ x[k] · h[n − k]   (k = −∞ … ∞)</div>
+<h2>1306203 Signals & Systems: Convolution Sum</h2>
+<div class="subtitle">y[n] = Σ x[k] · h[n − k]</div>
 
 <div class="layout">
 
@@ -337,8 +336,6 @@ html = r"""
             <button class="play" id="play">▶ PLAY</button>
             <button class="pause" id="pause">Ⅱ PAUSE</button>
             <button class="reset" id="reset">↺ RESET</button>
-            <button class="step" id="back">◀ n−1</button>
-            <button class="step" id="forward">n+1 ▶</button>
 
             <select id="speed" title="Animation speed">
                 <option value="0.25">0.25× speed</option>
@@ -1149,16 +1146,6 @@ $("#reset").addEventListener("click",()=>{
     fresh=true;
     render();
 });
-
-function stepBy(d){
-    pause();
-    fresh=false;
-    nf=Math.min(NMAX,Math.max(NMIN,curN()+d));
-    render();
-}
-
-$("#back").addEventListener("click",()=>stepBy(-1));
-$("#forward").addEventListener("click",()=>stepBy(1));
 
 $("#tslider").addEventListener("input",e=>{
     pause();
