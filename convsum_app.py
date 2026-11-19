@@ -403,7 +403,6 @@ const ICONS={
     step: [0,0,0,1,1,1,1,1],
     pulse:[0,0,1,1,1,1,0,0],
     exp:  [0,0,1,0.7,0.5,0.35,0.25,0.17],
-    sine: [0,0.7,1,0.7,0,-0.7,-1,-0.7],
     tri:  [0,0,0.25,0.5,0.75,1,0,0]
 };
 
@@ -425,38 +424,34 @@ const TYPES={
     step: {label:"Unit step"},
     pulse:{label:"Rect. pulse"},
     exp:  {label:"Decaying exp."},
-    sine: {label:"Sinusoid"},
     tri:  {label:"Triangular"}
 };
 
 const CHOICES={
-    x:["step","pulse","exp","sine"],
+    x:["step","pulse","exp","tri"],
     h:["step","pulse","exp","tri"]
 };
 
 const PARAMS=[
     {p:"A",label:"Amplitude A",
-        types:["step","pulse","exp","sine","tri"], min:-10, max:10, step:0.1},
+        types:["step","pulse","exp","tri"], min:-10, max:10, step:0.1},
     {p:"m",label:"Shift m (samples)  —  u[n − m]",
         types:["step"], min:-20, max:20, step:1, int:true},
     {p:"L",label:"Width L (samples)",
         types:["pulse","tri"], min:1, max:50, step:1, int:true},
     {p:"a",label:"Decay factor a (0 &lt; a &lt; 1)  —  a<sup>n</sup>",
-        types:["exp"], min:0.05, max:0.99, step:0.01},
-    {p:"f",label:"Frequency f (cycles/sample)",
-        types:["sine"], min:0.01, max:0.49, step:0.01}
+        types:["exp"], min:0.05, max:0.99, step:0.01}
 ];
 
 const sig={
-    x:{type:"pulse", A:1, m:0, L:4, a:0.7, f:0.1},
-    h:{type:"exp",   A:1, m:0, L:4, a:0.7, f:0.1}
+    x:{type:"pulse", A:1, m:0, L:4, a:0.7},
+    h:{type:"exp",   A:1, m:0, L:4, a:0.7}
 };
 
 function makeFn(s){
     if(s.type==="step")  return n=>n>=s.m?s.A:0;
     if(s.type==="pulse") return n=>(n>=0&&n<s.L)?s.A:0;
     if(s.type==="exp")   return n=>n>=0?s.A*Math.pow(s.a,n):0;
-    if(s.type==="sine")  return n=>n>=0?s.A*Math.sin(2*Math.PI*s.f*n):0;
     // triangular: ramp from 0 up to A at n = L, zero afterwards
     return n=>(n>=0&&n<=s.L)?s.A*n/s.L:0;
 }
